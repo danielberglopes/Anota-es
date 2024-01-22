@@ -1,9 +1,9 @@
 <template>
     <ul>
-        <li><a @click="() => this.$router.push({path:'/'})">Dashboard</a></li>
+      
+        
                     <li><a   @click="() => this.$router.push({path:'/Controle-de-Produtos'})" >Produtos</a></li>
                       
-                            <li><a @click="() => this.$router.push({path:'/Login'})">Sair</a></li>
 
                             
 
@@ -26,10 +26,7 @@ li:first-child{
     margin-left: 40px;
    
 }
-li:last-child{
-    float: right;
- 
-}
+
  li a {
     display: block;
     color: #ffff;

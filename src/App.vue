@@ -1,12 +1,8 @@
 <template>
   <div>
-    <!--
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    -->
-    <MenuView></MenuView>
+    
+    <MenuView v-if="$route.name !== 'LoginView'"></MenuView>
+
     <router-view />
   </div>
 </template>
@@ -35,6 +31,19 @@ export default {
     padding: 0;
     font-family: 'Quicksand', sans-serif;
 
+  }
+  .container{
+    margin-top: 15px
+  }
+  .titulo{
+    font-weight: 600px;
+    color: #363636;
+  }
+  hr{
+    margin: 0;
+  }
+  .sub-container{
+  margin-top: 15px;
   }
 </style>
 

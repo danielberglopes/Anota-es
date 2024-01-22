@@ -13,7 +13,7 @@
          
          placeHolder="123456"
          type="password"></InputView>
-     <ButtonView value="Entrar" :callback="() => alert('Fui clicado')" />
+     <ButtonView value="Entrar" :callback="login" />
     
         
     </div>
@@ -27,10 +27,17 @@ export default {
     components: {
         InputView,
         ButtonView
+    },
+
+    methods:{
+        login(){
+            //Aqui criaruma logica para acessar o sistema
+
+            this.$router.push({path:'/'});
+        }
     }
 };
 </script>
-
 
 <style scoped>
 .box-login{
