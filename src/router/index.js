@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
 import DashboardView from '../views/DashboardView.vue';
-
 import ControleDeProdutosView from '../views/ControleDeProdutosView.vue';
 const routes = [
   {
@@ -14,7 +12,6 @@ const routes = [
     }
   },
 
-
   {
     path: '/DashboardView',
     name: 'DashboardView',
@@ -24,8 +21,6 @@ const routes = [
 
   
 
- 
-  // Add other routes as needed
 ];
 
 const router = createRouter({
@@ -33,6 +28,7 @@ const router = createRouter({
   routes,
   mode: 'history'
 });
+
 
 export default router;
 

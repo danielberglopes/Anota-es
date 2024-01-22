@@ -4,16 +4,12 @@
     <form @submit.prevent="submitForm">
       <label for="name">Nome:</label>
       <input type="text" v-model="formData.name" required>
-
       <label for="value">Valor:</label>
       <input type="number" v-model="formData.value" required>
-
       <label for="date">Data:</label>
       <input type="date" v-model="formData.date" required>
-
       <label for="description">Descrição:</label>
       <textarea v-model="formData.description" rows="4" required></textarea>
-
       <ButtonView value="Adicionar" @click="submitForm" class="salVar col-sm-3" />
     </form>
   </div>
