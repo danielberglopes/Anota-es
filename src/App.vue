@@ -41,6 +41,11 @@ export default {
   }
   hr{
     margin: 0;
+    
+  }
+
+  .tabelaPrincipal{
+    margin-top:  15px;
   }
   .sub-container{
   margin-top: 15px;

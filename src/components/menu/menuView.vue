@@ -1,12 +1,6 @@
 <template>
     <ul>
-      
-        
-                    <li><a   @click="() => this.$router.push({path:'/Controle-de-Produtos'})" >Produtos</a></li>
-                      
-
-                            
-
+ <li><a   @click="() => this.$router.push({path:'/'})" >Produtos</a></li>        
     </ul>
 </template>
 
