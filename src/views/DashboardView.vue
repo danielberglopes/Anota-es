@@ -86,10 +86,9 @@
 
    
   </div>
-  <div   v-if="successAlertVisible" class="alert alert-success custom-alert" role="alert">
+  <div v-if="successMessageVisible" class="alert alert-success" role="alert">
   Registro adicionado com sucesso!
 </div>
-
    <div class="modal fade" id="myModall">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -139,40 +138,37 @@ export default {
 
   
   methods: {
-
-    
-
     submitForm() {
-    if (
-      this.formData.name &&
-      this.formData.value &&
-      this.formData.date &&
-      this.formData.description
-    ) {
-      if (this.editMode) {
-        this.dataItems[this.editIndex] = { ...this.formData };
-        this.editMode = false;
-        this.editIndex = null;
+      if (
+        this.formData.name &&
+        this.formData.value &&
+        this.formData.date &&
+        this.formData.description
+      ) {
+        if (this.editMode) {
+       
+          this.dataItems[this.editIndex] = { ...this.formData };
+          this.editMode = false;
+          this.editIndex = null;
+        } else {
+       
+          this.dataItems.push({ ...this.formData });
+        }
+
+        this.formData = {
+          name: "",
+          value: "",
+          date: "",
+          description: ""
+        };
+
+        localStorage.setItem("dataItems", JSON.stringify(this.dataItems));
       } else {
-        this.dataItems.push({ ...this.formData });
+        alert("Por favor, preencha todos os campos antes de salvar.");
       }
 
-      this.formData = {
-        name: "",
-        value: "",
-        date: "",
-        description: ""
-      };
-
-      localStorage.setItem("dataItems", JSON.stringify(this.dataItems));
-
-    
-      this.showSuccessMessage();
-    } else {
-      alert("Por favor, preencha todos os campos antes de salvar.");
-    }
-  },
-
+      
+    },
     editItem(index) {
       this.editMode = true;
       this.editIndex = index;
@@ -202,23 +198,6 @@ export default {
 
 
 <style scoped>
-.custom-alert {
-  position: fixed;
-  top: 10px;
-  right: 10px; 
-  animation: slideUp 2s ease-in-out; 
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 1;
-    transform: translateY(90%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
   th{
     text-align: center;
