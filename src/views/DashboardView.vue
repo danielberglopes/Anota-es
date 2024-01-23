@@ -24,9 +24,10 @@
             </thead>
           <tbody>
               <tr v-for="(item, index) in dataItems" :key="index">
-                <td >{{ item.description }}</td>
+                <td class="scrollable">{{ item.description }}</td>
+
              
-                <td>{{ item.date }}</td>
+                <td >{{ item.date }}</td>
                 <td  class="acao">
                  <svg @click="editItem(index)"  data-toggle="modal" data-target="#myModal"  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
         <path d="M0 0h24v24H0z" fill="none" />
@@ -237,6 +238,10 @@ form {
   box-sizing: border-box;
 }
 
+.scrollable {
+        max-width: 39px;
+        overflow-x: auto;
+    }
 label {
   display: block;
   margin-bottom: 8px;
