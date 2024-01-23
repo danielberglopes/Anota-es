@@ -5,7 +5,6 @@
         <div class="col-sm-12">
           <h2 class="titulo">Anotações</h2>
           <hr>
-         
         </div>
       </div>
       <div class="row sub-container">
@@ -19,7 +18,6 @@
             <thead>
               <tr>
                 <th>Descrição</th>
-
                 <th>Data</th>
                 <th>Ação</th>
               </tr>
@@ -46,8 +44,6 @@
           </table>
         </div>
       </div>
-  
-      
     </div>
 
     <div class="modal fade" id="myModal">
@@ -59,7 +55,7 @@
           </div>
 
           <div class="modal-body">
-            <!-- Your form goes here -->
+          
             <form @submit.prevent="submitForm">
               <label for="name">Nome:</label>
               <input type="text" v-model="formData.name" required>
@@ -90,6 +86,9 @@
 
    
   </div>
+  <div   v-if="successAlertVisible" class="alert alert-success custom-alert" role="alert">
+  Registro adicionado com sucesso!
+</div>
 
    <div class="modal fade" id="myModall">
         <div class="modal-dialog modal-dialog-centered">
@@ -137,36 +136,43 @@ export default {
       editIndex: null
     };
   },
+
+  
   methods: {
+
+    
+
     submitForm() {
-      if (
-        this.formData.name &&
-        this.formData.value &&
-        this.formData.date &&
-        this.formData.description
-      ) {
-        if (this.editMode) {
-          // Editing existing item
-          this.dataItems[this.editIndex] = { ...this.formData };
-          this.editMode = false;
-          this.editIndex = null;
-        } else {
-          // Adding new item
-          this.dataItems.push({ ...this.formData });
-        }
-
-        this.formData = {
-          name: "",
-          value: "",
-          date: "",
-          description: ""
-        };
-
-        localStorage.setItem("dataItems", JSON.stringify(this.dataItems));
+    if (
+      this.formData.name &&
+      this.formData.value &&
+      this.formData.date &&
+      this.formData.description
+    ) {
+      if (this.editMode) {
+        this.dataItems[this.editIndex] = { ...this.formData };
+        this.editMode = false;
+        this.editIndex = null;
       } else {
-        alert("Por favor, preencha todos os campos antes de salvar.");
+        this.dataItems.push({ ...this.formData });
       }
-    },
+
+      this.formData = {
+        name: "",
+        value: "",
+        date: "",
+        description: ""
+      };
+
+      localStorage.setItem("dataItems", JSON.stringify(this.dataItems));
+
+    
+      this.showSuccessMessage();
+    } else {
+      alert("Por favor, preencha todos os campos antes de salvar.");
+    }
+  },
+
     editItem(index) {
       this.editMode = true;
       this.editIndex = index;
@@ -196,6 +202,23 @@ export default {
 
 
 <style scoped>
+.custom-alert {
+  position: fixed;
+  top: 10px;
+  right: 10px; 
+  animation: slideUp 2s ease-in-out; 
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    transform: translateY(90%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
   th{
     text-align: center;
@@ -204,7 +227,7 @@ export default {
     text-align: center;
   }
   .modal-footer {
-    border-top: none; /* This will remove the top border */
+    border-top: none; 
 }
 .salVar {
   float: right;
@@ -256,9 +279,5 @@ input[type="date"] {
   appearance: none;
   padding: 8px;
 }
-
-
-
-
 </style>
 
