@@ -60,7 +60,7 @@
               <label for="name">Nome:</label>
               <input type="text" v-model="formData.name" required>
               <label for="value">Valor:</label>
-              <input type="number" v-model="formData.value" required>
+              <input type="text" v-model="formData.value" required>
               <label for="date">Data:</label>
               <input type="date" v-model="formData.date" required>
               <label for="description">Descrição:</label>
