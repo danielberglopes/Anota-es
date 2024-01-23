@@ -2,6 +2,7 @@ import { reject, resolve } from 'core-js/fn/promise';
 import api from './api';
 
 
+
 function obterTodos() {
     return new Promise((resolve, reject) => {
         return api.get('/produtos')

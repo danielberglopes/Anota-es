@@ -1,6 +1,6 @@
 <template>
     <ul>
- <li><a   @click="() => this.$router.push({path:'/'})" >Produtos</a></li>        
+ <li><a   @click="() => this.$router.push({path:'/'})" >Anotações</a></li>        
     </ul>
 </template>
 

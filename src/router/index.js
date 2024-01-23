@@ -1,25 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import DashboardView from '../views/DashboardView.vue';
-import ControleDeProdutosView from '../views/ControleDeProdutosView.vue';
+
 const routes = [
-  {
-    path: '/',
-    name: 'ControleDeProdutosView',
-    component: ControleDeProdutosView,
-    title: 'Produtos',
-    meta: {
-      requiredAuth: true
-    }
-  },
 
   {
-    path: '/DashboardView',
+
+    path: '/',
     name: 'DashboardView',
     component: DashboardView,
   },
 
-
-  
 
 ];
 
