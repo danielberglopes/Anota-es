@@ -23,7 +23,7 @@
               </tr>
             </thead>
           <tbody>
-              <tr v-for="(item, index) in dataItems" :key="index">
+              <tr v-for="(item, index) in paginatedDataItems"  :key="index">
                 <td class="scrollable">{{ item.description }}</td>
 
              
@@ -43,9 +43,27 @@
               </tr>
             </tbody>
           </table>
+
+          <div class="row ">
+          <div class="col-sm-12">
+            <ul class="pagination" >
+              <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
+                <button class="page-link" @click="prevPage">volta</button>
+              </li>
+              <li class="page-item" v-for="page in totalPages" :key="page" :class="{ 'active': page === currentPage }">
+                <button class="page-link" @click="goToPage(page)">{{ page }}</button>
+              </li>
+              <li class="page-item" :class="{ 'disabled': currentPage === totalPages }">
+                <button class="page-link" @click="nextPage">proximo</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+          
         </div>
       </div>
     </div>
+
     <div class="modal fade" id="myModal">
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -133,11 +151,32 @@ export default {
       editIndex: null,
       successMessageVisible: false,
       deleteMessageVisible: false,
+      currentPage: 1,
+      pageSize: 6,
     };
   },
 
   
   methods: {
+
+    prevPage() {
+        if (this.currentPage > 1) {
+          this.currentPage--;
+        }
+      },
+      nextPage() {
+        if (this.currentPage < this.totalPages) {
+          this.currentPage++;
+        }
+      },
+      goToPage(page) {
+        if (page >= 1 && page <= this.totalPages) {
+          this.currentPage = page;
+        }
+      },
+  
+
+
     submitForm() {
       if (
         this.formData.name &&
@@ -165,7 +204,7 @@ export default {
         localStorage.setItem("dataItems", JSON.stringify(this.dataItems));
         this.successMessageVisible = true;
 
-// Hide success message after 2 seconds
+
 setTimeout(() => {
   this.successMessageVisible = false;
 }, 2000);
@@ -203,7 +242,21 @@ setTimeout(() => {
   components: {
     ButtonView
 
-  }
+  },
+  
+
+
+
+  computed: {
+      paginatedDataItems() {
+        const start = (this.currentPage - 1) * this.pageSize;
+        const end = start + this.pageSize;
+        return this.dataItems.slice(start, end);
+      },
+      totalPages() {
+        return Math.ceil(this.dataItems.length / this.pageSize);
+      },
+    },
 };
 </script>
 
@@ -248,7 +301,9 @@ setTimeout(() => {
  background-color: var(--cor-primaria);
 }
 
-
+.pagination{
+  float: right; background-color: aliceblue;
+}
 form {
 
   padding: 33px;
