@@ -27,7 +27,7 @@
                 <td class="scrollable">{{ item.description }}</td>
 
              
-                <td >{{ item.date }}</td>
+                <td>{{ item.date }}</td>
                 <td  class="acao">
                  <svg @click="editItem(index)"  data-toggle="modal" data-target="#myModal"  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
         <path d="M0 0h24v24H0z" fill="none" />
@@ -46,7 +46,6 @@
         </div>
       </div>
     </div>
-
     <div class="modal fade" id="myModal">
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -56,7 +55,7 @@
           </div>
 
           <div class="modal-body">
-          
+
             <form @submit.prevent="submitForm">
               <label for="name">Nome:</label>
               <input type="text" v-model="formData.name" required>
@@ -74,8 +73,6 @@
                     <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
                   </svg>
                 </button>
-
-            
                 <button type="button" class="btn btn-success" data-dismiss="modal"  @click="submitForm">  Registrar</button>
               </div>
             </form>
@@ -84,12 +81,15 @@
         </div>
       </div>
     </div>
-
-   
   </div>
-  <div v-if="successMessageVisible" class="alert alert-success" role="alert">
-  Registro adicionado com sucesso!
-</div>
+  <div v-if="successMessageVisible" class="alert alert-success fade-out" role="alert" ref="successAlert">
+    Anotações registrado com sucesso!
+    </div>
+
+    <div v-if="deleteMessageVisible" class="alert alert-danger fade-out" role="alert" ref="deleteAlert">
+      Anotação deletada com sucesso!
+    </div>
+
    <div class="modal fade" id="myModall">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -115,12 +115,9 @@
         </div>
       </div>
 </template>
-
 <script>
 import router from "@/router";
 import ButtonView from "@/components/button/buttonView.vue";
-
-
 export default {
   name: "ControleDeProdutosView",
   data() {
@@ -133,7 +130,9 @@ export default {
       },
       dataItems: [],
       editMode: false,
-      editIndex: null
+      editIndex: null,
+      successMessageVisible: false,
+      deleteMessageVisible: false,
     };
   },
 
@@ -164,6 +163,13 @@ export default {
         };
 
         localStorage.setItem("dataItems", JSON.stringify(this.dataItems));
+        this.successMessageVisible = true;
+
+// Hide success message after 2 seconds
+setTimeout(() => {
+  this.successMessageVisible = false;
+}, 2000);
+
       } else {
         alert("Por favor, preencha todos os campos antes de salvar.");
       }
@@ -178,6 +184,11 @@ export default {
     deleteItem(index) {
       this.dataItems.splice(index, 1);
       localStorage.setItem("dataItems", JSON.stringify(this.dataItems));
+      this.deleteMessageVisible = true;
+setTimeout(() => {
+  this.deleteMessageVisible = false;
+}, 2000);
+
     },
     goToDashboard() {
       router.push({ name: "DashboardView" });
@@ -196,10 +207,18 @@ export default {
 };
 </script>
 
-
-
 <style scoped>
+.fade-out {
+  position: fixed;
+  top: 10px; 
+  right: 10px; 
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
 
+.fade-out.hide {
+  opacity: 0;
+}
   th{
     text-align: center;
   }
