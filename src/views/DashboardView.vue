@@ -302,7 +302,7 @@ setTimeout(() => {
 }
 
 .pagination{
-  float: right; background-color: aliceblue;
+  float: right; background-color: #fff;
 }
 form {
 
