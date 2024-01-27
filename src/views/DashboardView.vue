@@ -1,6 +1,6 @@
 <template>
   <div>
-     <div class="container">
+    <div class="container">
       <div class="row">
         <div class="col-sm-12">
           <h2 class="titulo">Anotações</h2>
@@ -8,8 +8,8 @@
         </div>
       </div>
       <div class="row sub-container">
-     <div class="col-sm-3">
-          <ButtonView value="Adicionar" data-toggle="modal" data-target="#myModal"  />
+        <div class="col-sm-3">
+          <ButtonView value="Adicionar" data-toggle="modal" data-target="#myModal" />
         </div>
       </div>
       <div class="row tabelaPrincipal">
@@ -22,17 +22,20 @@
                 <th>Ação</th>
               </tr>
             </thead>
-          <tbody>
-              <tr v-for="(item, index) in paginatedDataItems"  :key="index">
+            <tbody>
+              <tr v-for="(item, index) in dataItems" :key="index">
                 <td class="scrollable">{{ item.description }}</td>
 
-             
+
                 <td>{{ item.date }}</td>
-                <td  class="acao">
-                 <svg @click="editItem(index)"  data-toggle="modal" data-target="#myModal"  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-        <path d="M0 0h24v24H0z" fill="none" />
-        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
-      </svg>
+                <td class="acao">
+                  <svg @click="editItem(index)" data-toggle="modal" data-target="#myModal"
+                    xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
+                    <path d="M0 0h24v24H0z" fill="none" />
+                    <path
+                      d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                  </svg>
+
                   <span style="margin-right: 10px;"></span>
                   <svg xmlns="http://www.w3.org/2000/svg" height="24px" data-toggle="modal" data-target="#myModall"
                     viewBox="0 0 24 24" width="24px" fill="#000000">
@@ -85,21 +88,54 @@
               <textarea v-model="formData.description" rows="4" required></textarea>
 
               <div class="modal-footer ">
-                <button type="button" class="btn buttonSecuntadrio" @click="goToDashboard"  data-dismiss="modal">
+                <button type="button" class="btn buttonSecuntadrio" @click="goToDashboard" data-dismiss="modal">
                   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
                     <path d="M0 0h24v24H0z" fill="none" />
                     <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
                   </svg>
                 </button>
+
                 <button type="button" class="btn btn-success" data-dismiss="modal"  @click="submitForm">  Registrar</button>
+
+
+
+
               </div>
             </form>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="modal fade" id="myModall">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title">Deseja excluir esta anotações</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <p>Você esta prestes a deletar uma anotação e esta anotação não poderá se recupera</p>
+          <p>Tem certeza que deseja excluir?</p>
+        </div>
+
+        <div class="modal-footer">
+
+          <div class="col-sm-3">
+            <ButtonView value="Excluir" @click="deleteItem(index)" data-dismiss="modal" />
           </div>
 
         </div>
       </div>
     </div>
   </div>
+
   <div v-if="successMessageVisible" class="alert alert-success fade-out" role="alert" ref="successAlert">
     Anotações registrado com sucesso!
     </div>
@@ -132,6 +168,7 @@
           </div>
         </div>
       </div>
+
 </template>
 <script>
 import router from "@/router";
@@ -150,13 +187,15 @@ export default {
       editMode: false,
       editIndex: null,
       successMessageVisible: false,
+
       deleteMessageVisible: false,
       currentPage: 1,
       pageSize: 6,
+
     };
   },
 
-  
+
   methods: {
 
     prevPage() {
@@ -185,12 +224,12 @@ export default {
         this.formData.description
       ) {
         if (this.editMode) {
-       
+
           this.dataItems[this.editIndex] = { ...this.formData };
           this.editMode = false;
           this.editIndex = null;
         } else {
-       
+
           this.dataItems.push({ ...this.formData });
         }
 
@@ -202,6 +241,7 @@ export default {
         };
 
         localStorage.setItem("dataItems", JSON.stringify(this.dataItems));
+
         this.successMessageVisible = true;
 
 
@@ -209,11 +249,17 @@ setTimeout(() => {
   this.successMessageVisible = false;
 }, 2000);
 
-      } else {
+
+        // Show success alert and hide after 2 seconds
+        this.successMessageVisible = true;
+        setTimeout(() => {
+          this.successMessageVisible = false;
+        }, 2000);
+     } else {
         alert("Por favor, preencha todos os campos antes de salvar.");
       }
 
-      
+
     },
     editItem(index) {
       this.editMode = true;
@@ -261,6 +307,7 @@ setTimeout(() => {
 </script>
 
 <style scoped>
+
 .fade-out {
   position: fixed;
   top: 10px; 
@@ -272,33 +319,43 @@ setTimeout(() => {
 .fade-out.hide {
   opacity: 0;
 }
-  th{
-    text-align: center;
-  }
+ 
   td{
     text-align: center;
   }
   .modal-footer {
     border-top: none; 
+  }
+
+th{
+  text-align:center;
 }
+
+
+.modal-footer {
+  border-top: none;
+}
+
 .salVar {
   float: right;
 }
 
 
-.buttonPrimeiro{
-      background-color: #218838;
+.buttonPrimeiro {
+  background-color: #218838;
 }
-.buttonPrimeiro:hover{
-      background-color: #218838;
+
+.buttonPrimeiro:hover {
+  background-color: #218838;
 }
-.buttonSecuntadrio:hover  {
-  color:#fff;
+
+.buttonSecuntadrio:hover {
+  color: #fff;
   background-color: var(--cor-primaria);
 }
 
-.buttonSecuntadrio{
- background-color: var(--cor-primaria);
+.buttonSecuntadrio {
+  background-color: var(--cor-primaria);
 }
 
 .pagination{
@@ -313,9 +370,10 @@ form {
 }
 
 .scrollable {
-        max-width: 39px;
-        overflow-x: auto;
-    }
+  max-width: 39px;
+  overflow-x: auto;
+}
+
 label {
   display: block;
   margin-bottom: 8px;
@@ -336,6 +394,4 @@ input[type="date"] {
 
   appearance: none;
   padding: 8px;
-}
-</style>
-
+}</style>

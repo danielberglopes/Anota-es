@@ -43,7 +43,6 @@ export default {
     margin: 0;
     
   }
-
   .tabelaPrincipal{
     margin-top:  15px;
   }
